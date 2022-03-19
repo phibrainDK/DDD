@@ -1,0 +1,39 @@
+Django
+
+# Pinning pyscopg2-binary due to issue with PATH. Version 2.9.1 throws the following error:
+#
+# Error: pg_config executable not found.
+#
+#     pg_config is required to build psycopg2 from source.  Please add the directory
+#     containing pg_config to the $PATH or specify the full executable path with the
+#     option:
+#
+#         python setup.py build_ext --pg-config /path/to/pg_config build ...
+#
+#     or with the pg_config option in 'setup.cfg'.
+#
+#     If you prefer to avoid building psycopg2 from source, please install the PyPI
+#     'psycopg2-binary' package instead.
+psycopg2-binary
+
+django-nose
+django-cors-headers
+djangorestframework
+Faker
+
+# .env
+python-dotenv
+
+# tools
+flake8
+black
+isort
+
+# extras
+django_extensions
+coverage
+ipython
+parameterized
+
+# required plugin for nose
+pinocchio
