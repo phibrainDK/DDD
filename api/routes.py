@@ -19,4 +19,7 @@ def get_users(
         from_age=getattr(user_in, "from_age"),
         to_age=getattr(user_in, "to_age"),
         status_option=getattr(user_in, "statu_option"),
+        order=pagination_params.order,
+        page=pagination_params.page,
+        page_size=pagination_params.page_size,
     )

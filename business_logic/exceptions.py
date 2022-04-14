@@ -17,5 +17,5 @@ class IlegalStateException(Exception):
 
 class InvalidEditStatus(IlegalStateException):
     status_code = status.HTTP_401_UNAUTHORIZED
-    error_code = "ILE001"
+    error_code = "DDD001"
     error_message = "The given state is ilegal"

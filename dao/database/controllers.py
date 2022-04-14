@@ -11,6 +11,8 @@ def get_users(
     from_age: Optional[int],
     to_age: Optional[int],
     order: models.OrderStatus,
+    page: int,
+    page_size: int,
 ) -> UsersOut:
     users = models.Person.objects.all()
     if name:
@@ -24,4 +26,4 @@ def get_users(
     if to_age:
         users = users.filter(to_age__lt=to_age)
     users = users.order_by("age" if order == models.OrderStatus.ASCENDING else "-age")
-    return UsersOut.from_orms(users)
+    return UsersOut.from_orms(users, page, page_size)
