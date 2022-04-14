@@ -1,0 +1,67 @@
+{
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+
+    "python.defaultInterpreterPath": "/path/to/.../bin/python",
+
+    "python.linting.enabled": true,
+    "python.linting.lintOnSave": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Path": "/path/to/.../bin/flake8",
+    "python.linting.flake8Args": [
+        "--max-line-length=88",
+        "--verbose"
+    ],
+
+    "python.formatting.provider": "black",
+    "python.formatting.blackPath": "/path/to/.../bin/black",
+
+    "python.sortImports.path": "/path/to/.../bin/isort",
+
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/code/be/"
+    ],
+    "python.analysis.logLevel": "Trace",
+    "python.analysis.typeCheckingMode": "basic",
+
+    "[python]": {
+        "editor.rulers": [
+            88
+        ],
+        "editor.detectIndentation": false,
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4,
+        "editor.formatOnSave": true,
+        "editor.formatOnSaveMode": "file",
+        // black
+        "editor.formatOnSave": true,
+        "editor.formatOnSaveMode": "file",
+
+        // isort
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+
+    // "[dockercompose]": {
+    //     "editor.detectIndentation": false,
+    //     "editor.insertSpaces": true,
+    //     "editor.tabSize": 2
+    // },
+
+    "files.exclude": {
+        "**/.venv**": true,
+        "**/venv**": true,
+        "**/__pycache__": true,
+        "**/.pytest_cache/**": true
+    },
+
+    "search.exclude": {
+        "**/.venv**": true,
+        "**/venv**": true,
+        "**/__pycache__": true,
+        "**/.pytest_cache/**": true
+    }
+}
