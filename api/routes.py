@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, status
 from api.schemas import PaginationParams
-from schemas import UserApi, UserSchema
+from api.schemas import UserApi, UserSchema
 from business_logic.business_logic import get_filter_users
 
 router = APIRouter()

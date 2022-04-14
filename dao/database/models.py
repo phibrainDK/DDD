@@ -69,3 +69,4 @@ class Person(models.Model):
 
     class Meta:
         db_table = "table_person"
+        app_label = "DDD"
