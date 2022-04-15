@@ -58,7 +58,11 @@ pip install --no-cache-dir -U pip setuptools wheel
 ```bash
 pip install -r pip/with-dep-requirements.txt
 ```
-- Extra: Using pip-compile to generate exact requirements using as base `pip/no-dep-requirement.in`
+- Extra: Using pip-compile to generate exact requirements using as base `pip/no-dep-requirement.in`, it is generate using
 ```bash
 pip-compile pip/no-dep-requirements.in --output-file=pip/with-dep-requirements.txt
+```
+- To run the app, first active the environment, then use:
+```bash
+uvicorn api.main:app --reload
 ```
