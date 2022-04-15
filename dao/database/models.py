@@ -54,10 +54,10 @@ class Person(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __init__(self, cmd: CreatePerson) -> None:
-        self.full_name = cmd.full_name
-        self.status = Status.ACTIVE
-        self.age = cmd.age
+    # def __init__(self, cmd: CreatePerson) -> None:
+    #     self.full_name = cmd.full_name
+    #     self.status = Status.ACTIVE
+    #     self.age = cmd.age
 
     def handle_person(self, cmd: EditPerson) -> None:
         if self.status == Status.INACTIVE:

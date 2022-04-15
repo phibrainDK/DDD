@@ -67,10 +67,11 @@ class UsersOut(CustomBaseModel):
             page=page,
             page_size=page_size,
         )
-        return cls(
+        resp = cls(
             users=User.from_orms(users_page),
             count=paginator.count,
             num_pages=paginator.num_pages,
             page=page,
             page_size=page_size,
         )
+        return resp

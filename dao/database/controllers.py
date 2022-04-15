@@ -6,21 +6,21 @@ from django.contrib.postgres.search import TrigramSimilarity
 
 
 def get_users_from_db(
-    name: str,
     status_option: List[UserStatus],
-    from_age: Optional[int],
-    to_age: Optional[int],
     order: models.OrderStatus,
     page: int,
     page_size: int,
+    name: Optional[str],
+    from_age: Optional[int],
+    to_age: Optional[int],
 ) -> UsersOut:
     users = models.Person.objects.all()
+    if status_option:
+        users = users.filter(status__in=status_option)
     if name:
         users = users.annotate(similarity=TrigramSimilarity("full_name", name)).filter(
             similarity__gt=LIMIT_SIMILARITY
         )
-    if status_option:
-        users = users.filter(status__in=status_option)
     if from_age:
         users = users.filter(age__gt=from_age)
     if to_age:

@@ -4,15 +4,15 @@ from typing import List, Optional
 
 
 def get_filter_users(
-    name: str,
     status_option: List[UserStatus],
-    from_age: Optional[int],
-    to_age: Optional[int],
     order: OrderStatus,
     page: int,
     page_size: int,
+    name: Optional[str],
+    from_age: Optional[int],
+    to_age: Optional[int],
 ) -> UsersOut:
-    return get_users_from_db(
+    resp = get_users_from_db(
         name=name,
         status_option=status_option,
         from_age=from_age,
@@ -21,3 +21,4 @@ def get_filter_users(
         page=page,
         page_size=page_size,
     )
+    return resp

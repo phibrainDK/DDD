@@ -35,7 +35,7 @@ class UserSchema:
     to_age: Optional[int] = Query(
         None, description="age to which it will be filtered", example=30
     )
-    status_option: List[UserStatus] = Query(
+    status_option: Optional[List[UserStatus]] = Query(
         [],
         description=("The user status. You can request multiple status"),
         example=["active", "inactive"],

@@ -2,7 +2,8 @@ from fastapi import APIRouter, Depends, status
 from api.schemas import PaginationParams
 from api.schemas import UserSchema
 from business_logic.business_logic import get_filter_users
-from business_logic.schemas import UsersOut
+from business_logic.schemas import UserStatus, UsersOut
+from typing import List, Optional
 
 router = APIRouter()
 
@@ -15,11 +16,15 @@ def get_users(
     """
     Return the list of users filtered by UserSchema
     """
+    name = getattr(user_in, "name")
+    from_age: Optional[int] = getattr(user_in, "from_age")
+    to_age: Optional[int] = getattr(user_in, "to_age")
+    status_option: List[UserStatus] = getattr(user_in, "status_option")
     return get_filter_users(
-        name=getattr(user_in, "name"),
-        from_age=getattr(user_in, "from_age"),
-        to_age=getattr(user_in, "to_age"),
-        status_option=getattr(user_in, "status_option"),
+        name=name,
+        from_age=from_age,
+        to_age=to_age,
+        status_option=status_option,
         order=pagination_params.order,
         page=pagination_params.page,
         page_size=pagination_params.page_size,

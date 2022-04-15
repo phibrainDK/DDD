@@ -14,10 +14,10 @@ from mangum import Mangum
 from starlette.requests import Request
 from business_logic.exceptions import IlegalStateException
 from api.config import settings
-from api.routes import router
+from api.routes.router import router
 
 app: Any = FastAPI(
-    title="E2E API",
+    title="DDD API",
     version=settings.API_VERSION,
     root_path=settings.ROOT_PATH,
 )
@@ -25,7 +25,7 @@ app: Any = FastAPI(
 general_exception = {
     "status_code": status.HTTP_422_UNPROCESSABLE_ENTITY,
     "error_message": "An unexpected internal error ocurred",
-    "error_code": "DDD000",
+    "error_code": "DDD999",
 }
 
 
