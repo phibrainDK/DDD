@@ -1,5 +1,5 @@
-from dao.database.controllers import get_users
-from business_logic.schemas import UserStatus, OrderStatus
+from dao.database.controllers import get_users_from_db
+from business_logic.schemas import UserStatus, OrderStatus, UsersOut
 from typing import List, Optional
 
 
@@ -11,8 +11,8 @@ def get_filter_users(
     order: OrderStatus,
     page: int,
     page_size: int,
-):
-    return get_users(
+) -> UsersOut:
+    return get_users_from_db(
         name=name,
         status_option=status_option,
         from_age=from_age,

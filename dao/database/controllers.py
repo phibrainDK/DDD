@@ -5,7 +5,7 @@ from dao.database import models
 from django.contrib.postgres.search import TrigramSimilarity
 
 
-def get_users(
+def get_users_from_db(
     name: str,
     status_option: List[UserStatus],
     from_age: Optional[int],
@@ -24,6 +24,6 @@ def get_users(
     if from_age:
         users = users.filter(age__gt=from_age)
     if to_age:
-        users = users.filter(to_age__lt=to_age)
+        users = users.filter(age__lt=to_age)
     users = users.order_by("age" if order == models.OrderStatus.ASCENDING else "-age")
     return UsersOut.from_orms(users, page, page_size)

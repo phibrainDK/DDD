@@ -51,6 +51,9 @@ class Person(models.Model):
         default=Status.ACTIVE,
     )
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     def __init__(self, cmd: CreatePerson) -> None:
         self.full_name = cmd.full_name
         self.status = Status.ACTIVE

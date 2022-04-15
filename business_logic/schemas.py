@@ -11,7 +11,7 @@ UserStatus = Status
 OrderStatus = OrderStatus
 
 
-class BaseModel(_BaseModel):
+class CustomBaseModel(_BaseModel):
     @classmethod
     def from_orms(cls, orm_objects: Iterable):
         """
@@ -35,7 +35,7 @@ def paginate_orms(
     return results_page, paginator_func
 
 
-class User(BaseModel):
+class User(CustomBaseModel):
     id: UUID
     full_name: str
     age: int
@@ -45,7 +45,7 @@ class User(BaseModel):
         orm_mode = True
 
 
-class UsersOut(BaseModel):
+class UsersOut(CustomBaseModel):
     count: int = 0
     page: int = 1
     page_size: PositiveInt = 1
