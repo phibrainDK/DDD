@@ -1,43 +1,26 @@
+from dao.database.commands import (
+    GetUsers,
+    CreateUser,
+    EditUser,
+)
 from dao.database.controllers import (
     get_users_from_db,
     create_user_from_db,
     update_user_from_db,
 )
 from business_logic.schemas import (
-    UserBody,
-    UserStatus,
-    OrderStatus,
     UsersOut,
     User,
-    UserUpdateBody,
 )
-from typing import List, Optional
 
 
-def get_filter_users(
-    status_option: List[UserStatus],
-    order: OrderStatus,
-    page: int,
-    page_size: int,
-    name: Optional[str],
-    from_age: Optional[int],
-    to_age: Optional[int],
-) -> UsersOut:
-    resp = get_users_from_db(
-        name=name,
-        status_option=status_option,
-        from_age=from_age,
-        to_age=to_age,
-        order=order,
-        page=page,
-        page_size=page_size,
-    )
-    return resp
+def get_filter_users(filter_users_cmd: GetUsers) -> UsersOut:
+    return get_users_from_db(cmd=filter_users_cmd)
 
 
-def create_user_db(cmd: UserBody) -> User:
-    return create_user_from_db(cmd=cmd)
+def create_user_db(create_user_cmd: CreateUser) -> User:
+    return create_user_from_db(cmd=create_user_cmd)
 
 
-def update_user_db(cmd: UserUpdateBody) -> User:
-    return update_user_from_db(cmd=cmd)
+def update_user_db(update_user_cmd: EditUser) -> User:
+    return update_user_from_db(cmd=update_user_cmd)

@@ -1,43 +1,36 @@
+from dao.database.commands import GetUsers, CreateUser, EditUser
 from business_logic.constants import LIMIT_SIMILARITY
-from business_logic.schemas import UserBody, UserStatus, UserUpdateBody, UsersOut, User
-from typing import List, Optional
+from business_logic.schemas import UsersOut, User
 from dao.database import models
 from django.contrib.postgres.search import TrigramSimilarity
+from dao.database.options import OrderOption
 
 
-def get_users_from_db(
-    status_option: List[UserStatus],
-    order: models.OrderStatus,
-    page: int,
-    page_size: int,
-    name: Optional[str],
-    from_age: Optional[int],
-    to_age: Optional[int],
-) -> UsersOut:
-    users = models.Person.objects.all()
-    if status_option:
-        users = users.filter(status__in=status_option)
-    if name:
-        users = users.annotate(similarity=TrigramSimilarity("full_name", name)).filter(
-            similarity__gt=LIMIT_SIMILARITY
-        )
-    if from_age:
-        users = users.filter(age__gt=from_age)
-    if to_age:
-        users = users.filter(age__lt=to_age)
-    users = users.order_by("age" if order == models.OrderStatus.ASCENDING else "-age")
-    return UsersOut.from_orms(users, page, page_size)
+def get_users_from_db(cmd: GetUsers) -> UsersOut:
+    users = models.User.objects.all()
+    if cmd.status_option:
+        users = users.filter(status__in=cmd.status_option)
+    if cmd.name:
+        users = users.annotate(
+            similarity=TrigramSimilarity("full_name", cmd.name)
+        ).filter(similarity__gt=LIMIT_SIMILARITY)
+    if cmd.from_age:
+        users = users.filter(age__gt=cmd.from_age)
+    if cmd.to_age:
+        users = users.filter(age__lt=cmd.to_age)
+    users = users.order_by("age" if cmd.order == OrderOption.ASCENDING else "-age")
+    return UsersOut.from_orms(users, cmd.page, cmd.page_size)
 
 
-def create_user_from_db(cmd: UserBody) -> User:
-    current_user = models.Person()
+def create_user_from_db(cmd: CreateUser) -> User:
+    current_user = models.User()
     current_user.custom_create(cmd)
     current_user.save()
     return User.from_orm(current_user)
 
 
-def update_user_from_db(cmd: UserUpdateBody) -> User:
-    current_user = models.Person.objects.get(id=cmd.id)
-    current_user.handle_person(cmd)
+def update_user_from_db(cmd: EditUser) -> User:
+    current_user = models.User.objects.get(id=cmd.id)
+    current_user.handle_user(cmd)
     current_user.save(update_fields=["full_name", "age"])
     return User.from_orm(current_user)

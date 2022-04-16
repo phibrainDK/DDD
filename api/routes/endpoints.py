@@ -6,16 +6,19 @@ from api.schemas import (
     UserSchema,
     UserBodyIn,
     UserBodyUpdateIn,
+    UserQueryParamsIn,
 )
 from business_logic.business_logic import (
     get_filter_users,
     create_user_db,
     update_user_db,
 )
-from business_logic.schemas import UserStatus, UsersOut
-from typing import List, Optional
+from business_logic.schemas import UsersOut
 
 router = APIRouter()
+
+# TODO: Find a way to convert the @dataclass defined in dao.database.commands into
+# the one defined in api.schemas -> cause FastAPI use Path, Query, Body, etc
 
 
 @router.get("/users/", status_code=status.HTTP_200_OK, response_model=UsersOut)
@@ -27,40 +30,38 @@ def get_users(
     🤔🤔👀👀😎😎
     Return the list of users filtered by UserSchema
     """
-    name = getattr(user_in, "name")
-    from_age: Optional[int] = getattr(user_in, "from_age")
-    to_age: Optional[int] = getattr(user_in, "to_age")
-    status_option: List[UserStatus] = getattr(user_in, "status_option")
-    return get_filter_users(
-        name=name,
-        from_age=from_age,
-        to_age=to_age,
-        status_option=status_option,
-        order=pagination_params.order,
-        page=pagination_params.page,
-        page_size=pagination_params.page_size,
-    )
+    filter_users_cmd = UserQueryParamsIn()
+    filter_users_cmd.name = getattr(user_in, "name")
+    filter_users_cmd.from_age = getattr(user_in, "from_age")
+    filter_users_cmd.to_age = getattr(user_in, "to_age")
+    filter_users_cmd.status_option = getattr(user_in, "status_option")
+    filter_users_cmd.order = pagination_params.order
+    filter_users_cmd.page = pagination_params.page
+    filter_users_cmd.page_size = pagination_params.page_size
+    return get_filter_users(filter_users_cmd=filter_users_cmd)
 
 
 @router.post("/users/", status_code=status.HTTP_200_OK, response_model=UserApi)
-def create_user(user_in: UserBodyIn = Body(..., description="User fields to create")):
+def create_user(
+    user_body_in: UserBodyIn = Body(..., description="User fields to create"),
+):
     """
     🤔🤔👀👀😎😎
     Create a given user
     """
-    return create_user_db(cmd=user_in)
+    return create_user_db(create_user_cmd=user_body_in)
 
 
 @router.patch(
     "/users/{user_id}/", status_code=status.HTTP_200_OK, response_model=UserApi
 )
 def update_user(
-    user_in: UserBodyUpdateIn = Body(..., description="User fields to create"),
+    user_update_in: UserBodyUpdateIn = Body(..., description="User fields to create"),
     user_id: UUID = Path(..., title="User ID", description="ID of the given user"),
 ):
     """
     🤔🤔👀👀😎😎
     Update a given user
     """
-    user_in.id = user_id
-    return update_user_db(cmd=user_in)
+    user_update_in.id = user_id
+    return update_user_db(update_user_cmd=user_update_in)

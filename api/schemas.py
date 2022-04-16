@@ -1,9 +1,10 @@
 from business_logic.schemas import (
     UserStatus,
     User,
-    OrderStatus,
+    OrderOption,
     UserBody,
     UserUpdateBody,
+    UserQueryParams,
 )
 from typing import Optional, List
 from pydantic.dataclasses import dataclass
@@ -12,15 +13,16 @@ from fastapi import Query
 
 UserStatusApi = UserStatus
 UserApi = User
-OrderStatus = OrderStatus
+OrderOption = OrderOption
 UserBodyIn = UserBody
 UserBodyUpdateIn = UserUpdateBody
+UserQueryParamsIn = UserQueryParams
 
 
 class PaginationParams:
     def __init__(
         self,
-        order: OrderStatus = OrderStatus.ASCENDING,
+        order: OrderOption = OrderOption.ASCENDING,
         page: PositiveInt = 1,
         page_size: PositiveInt = 10,
     ):
@@ -33,7 +35,7 @@ class PaginationParams:
 class UserSchema:
     name: Optional[str] = Query(
         None,
-        description=("name to filter, it is not necesary to be complete "),
+        description=("name to filter, it is not necesary to be complete"),
         example="Einstein Flores, Helard Gomez",
     )
     from_age: Optional[int] = Query(
