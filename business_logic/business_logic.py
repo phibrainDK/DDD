@@ -1,5 +1,5 @@
-from dao.database.controllers import get_users_from_db
-from business_logic.schemas import UserStatus, OrderStatus, UsersOut
+from dao.database.controllers import get_users_from_db, create_user_from_db
+from business_logic.schemas import UserBody, UserStatus, OrderStatus, UsersOut, User
 from typing import List, Optional
 
 
@@ -22,3 +22,7 @@ def get_filter_users(
         page_size=page_size,
     )
     return resp
+
+
+def create_user_db(cmd: UserBody) -> User:
+    return create_user_from_db(cmd=cmd)

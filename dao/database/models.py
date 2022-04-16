@@ -1,7 +1,10 @@
+from dataclasses import dataclass
 from django.db import models
 import uuid
 from typing import Optional
+
 from business_logic.exceptions import InvalidEditStatus
+from pydantic import Field
 
 
 class OrderStatus(models.TextChoices):
@@ -14,9 +17,10 @@ class Status(models.TextChoices):
     INACTIVE = "inactive"
 
 
+@dataclass
 class CreatePerson:
-    full_name: str
-    age: str
+    full_name: str = Field(..., description="Full name of the given user")
+    age: int = Field(..., description="Age of the given person")
 
 
 class EditPerson:
@@ -54,10 +58,9 @@ class Person(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    # def __init__(self, cmd: CreatePerson) -> None:
-    #     self.full_name = cmd.full_name
-    #     self.status = Status.ACTIVE
-    #     self.age = cmd.age
+    def custom_create(self, cmd: CreatePerson):
+        self.full_name = cmd.full_name
+        self.age = cmd.age
 
     def handle_person(self, cmd: EditPerson) -> None:
         if self.status == Status.INACTIVE:

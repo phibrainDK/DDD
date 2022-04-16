@@ -1,5 +1,5 @@
 from business_logic.constants import LIMIT_SIMILARITY
-from business_logic.schemas import UserStatus, UsersOut
+from business_logic.schemas import UserBody, UserStatus, UsersOut, User
 from typing import List, Optional
 from dao.database import models
 from django.contrib.postgres.search import TrigramSimilarity
@@ -27,3 +27,10 @@ def get_users_from_db(
         users = users.filter(age__lt=to_age)
     users = users.order_by("age" if order == models.OrderStatus.ASCENDING else "-age")
     return UsersOut.from_orms(users, page, page_size)
+
+
+def create_user_from_db(cmd: UserBody) -> User:
+    current_user = models.Person()
+    current_user.custom_create(cmd)
+    current_user.save()
+    return User.from_orm(current_user)

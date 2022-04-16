@@ -1,13 +1,13 @@
-from business_logic.schemas import UserStatus, User
+from business_logic.schemas import UserStatus, User, OrderStatus, UserBody
 from typing import Optional, List
 from pydantic.dataclasses import dataclass
 from pydantic import PositiveInt
 from fastapi import Query
-from business_logic.schemas import OrderStatus
 
 UserStatusApi = UserStatus
 UserApi = User
 OrderStatus = OrderStatus
+UserBodyIn = UserBody
 
 
 class PaginationParams:
