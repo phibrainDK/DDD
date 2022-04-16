@@ -60,7 +60,7 @@ def update_user(
 ):
     """
     🤔🤔👀👀😎😎
-    Create a given user
+    Update a given user
     """
     user_in.id = user_id
     return update_user_db(cmd=user_in)
