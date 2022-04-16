@@ -23,10 +23,11 @@ class CreatePerson:
     age: int = Field(..., description="Age of the given person")
 
 
+@dataclass
 class EditPerson:
-    id: uuid.UUID
-    full_name: Optional[str]
-    age: str
+    id: Optional[uuid.UUID] = Field(None, description="ID of the given user")
+    full_name: Optional[str] = Field(None, description="Full name to update")
+    age: str = Field(None, description="Age to be updated")
 
 
 class EditStatusPerson:

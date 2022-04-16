@@ -1,5 +1,5 @@
 from business_logic.constants import LIMIT_SIMILARITY
-from business_logic.schemas import UserBody, UserStatus, UsersOut, User
+from business_logic.schemas import UserBody, UserStatus, UserUpdateBody, UsersOut, User
 from typing import List, Optional
 from dao.database import models
 from django.contrib.postgres.search import TrigramSimilarity
@@ -33,4 +33,11 @@ def create_user_from_db(cmd: UserBody) -> User:
     current_user = models.Person()
     current_user.custom_create(cmd)
     current_user.save()
+    return User.from_orm(current_user)
+
+
+def update_user_from_db(cmd: UserUpdateBody) -> User:
+    current_user = models.Person.objects.get(id=cmd.id)
+    current_user.handle_person(cmd)
+    current_user.save(update_fields=["full_name", "age"])
     return User.from_orm(current_user)

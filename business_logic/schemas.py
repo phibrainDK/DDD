@@ -1,6 +1,6 @@
 from pydantic import BaseModel as _BaseModel
 from pydantic import PositiveInt
-from dao.database.models import Status, OrderStatus, CreatePerson
+from dao.database.models import Status, OrderStatus, CreatePerson, EditPerson
 from uuid import UUID
 from typing import List, Iterable, Tuple
 from django.db.models import QuerySet
@@ -36,6 +36,7 @@ def paginate_orms(
 
 
 UserBody = CreatePerson
+UserUpdateBody = EditPerson
 
 
 class User(CustomBaseModel):

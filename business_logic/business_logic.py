@@ -1,5 +1,16 @@
-from dao.database.controllers import get_users_from_db, create_user_from_db
-from business_logic.schemas import UserBody, UserStatus, OrderStatus, UsersOut, User
+from dao.database.controllers import (
+    get_users_from_db,
+    create_user_from_db,
+    update_user_from_db,
+)
+from business_logic.schemas import (
+    UserBody,
+    UserStatus,
+    OrderStatus,
+    UsersOut,
+    User,
+    UserUpdateBody,
+)
 from typing import List, Optional
 
 
@@ -26,3 +37,7 @@ def get_filter_users(
 
 def create_user_db(cmd: UserBody) -> User:
     return create_user_from_db(cmd=cmd)
+
+
+def update_user_db(cmd: UserUpdateBody) -> User:
+    return update_user_from_db(cmd=cmd)
