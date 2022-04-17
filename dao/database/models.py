@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-
+from typing import List
 from business_logic.exceptions import InvalidEditStatus
 from dao.database.commands import (
     CreateUser,
@@ -38,11 +38,20 @@ class User(models.Model):
         self.full_name = cmd.full_name
         self.age = cmd.age
 
-    def handle_user(self, cmd: EditUser) -> None:
+    def handle_user(self, cmd: EditUser) -> List[str]:
         if self.status == Status.INACTIVE:
             raise InvalidEditStatus
-        self.full_name = cmd.full_name
-        self.age = cmd.age
+        update_fields = []
+        if cmd.full_name:
+            self.full_name = cmd.full_name
+            update_fields.append("full_name")
+        if cmd.age:
+            self.age = cmd.age
+            update_fields.append("age")
+        print(update_fields, "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@222")
+        if update_fields:
+            return update_fields
+        raise InvalidEditStatus
 
     def handle_status(self, cmd: EditStatusUser) -> None:
         if self.status == cmd.status:

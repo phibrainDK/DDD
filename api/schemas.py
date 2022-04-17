@@ -5,6 +5,7 @@ from business_logic.schemas import (
     UserBody,
     UserUpdateBody,
     UserQueryParams,
+    UserUpdate,
 )
 from typing import Optional, List
 from pydantic.dataclasses import dataclass
@@ -17,6 +18,7 @@ OrderOption = OrderOption
 UserBodyIn = UserBody
 UserBodyUpdateIn = UserUpdateBody
 UserQueryParamsIn = UserQueryParams
+UserUpdateIn = UserUpdate
 
 
 class PaginationParams:

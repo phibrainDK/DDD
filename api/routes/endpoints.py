@@ -7,6 +7,7 @@ from api.schemas import (
     UserBodyIn,
     UserBodyUpdateIn,
     UserQueryParamsIn,
+    UserUpdateIn,
 )
 from business_logic.business_logic import (
     get_filter_users,
@@ -63,5 +64,5 @@ def update_user(
     🤔🤔👀👀😎😎
     Update a given user
     """
-    user_update_in.id = user_id
-    return update_user_db(update_user_cmd=user_update_in)
+    update_user_cmd = UserUpdateIn(user_id, user_update_in)
+    return update_user_db(update_user_cmd=update_user_cmd)

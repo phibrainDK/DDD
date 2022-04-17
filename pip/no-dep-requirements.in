@@ -29,6 +29,7 @@ factory_boy
 
 
 # tools
+dependency-injector
 flake8
 black
 isort

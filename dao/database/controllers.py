@@ -1,4 +1,4 @@
-from dao.database.commands import GetUsers, CreateUser, EditUser
+from dao.database.commands import GetUsers, CreateUser, UpdateUser
 from business_logic.constants import LIMIT_SIMILARITY
 from business_logic.schemas import UsersOut, User
 from dao.database import models
@@ -29,8 +29,12 @@ def create_user_from_db(cmd: CreateUser) -> User:
     return User.from_orm(current_user)
 
 
-def update_user_from_db(cmd: EditUser) -> User:
-    current_user = models.User.objects.get(id=cmd.id)
-    current_user.handle_user(cmd)
-    current_user.save(update_fields=["full_name", "age"])
+def update_user_from_db(cmd: UpdateUser) -> User:
+    current_user = models.User.objects.get(id=cmd.edit_user.id)
+    update_fields = []
+    if cmd.edit_status_user:
+        current_user.handle_status(cmd.edit_status_user)
+        update_fields.append("status")
+    update_fields.extend(current_user.handle_user(cmd.edit_user))
+    current_user.save(update_fields=update_fields)
     return User.from_orm(current_user)

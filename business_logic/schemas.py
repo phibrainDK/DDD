@@ -2,8 +2,9 @@ from pydantic import BaseModel as _BaseModel
 from pydantic import PositiveInt
 from dao.database.commands import (
     GetUsers,
-    EditUser,
     CreateUser,
+    UpdateUser,
+    UpdateUserSchema,
 )
 from dao.database.options import Status, OrderOption
 from uuid import UUID
@@ -41,8 +42,9 @@ def paginate_orms(
 
 
 UserBody = CreateUser
-UserUpdateBody = EditUser
+UserUpdateBody = UpdateUserSchema
 UserQueryParams = GetUsers
+UserUpdate = UpdateUser
 
 
 class User(CustomBaseModel):
