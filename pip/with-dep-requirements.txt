@@ -185,6 +185,8 @@ pytz==2021.3
     # via
     #   djangorestframework
     #   zeep
+reactivex==4.0.0
+    # via -r pip/no-dep-requirements.in
 requests==2.27.1
     # via
     #   -r pip/no-dep-requirements.in
@@ -195,6 +197,8 @@ requests-file==1.5.1
     # via zeep
 requests-toolbelt==0.9.1
     # via zeep
+rx==3.2.0
+    # via -r pip/no-dep-requirements.in
 s3transfer==0.5.2
     # via boto3
 sentry-sdk==1.5.9
@@ -231,6 +235,7 @@ typing-extensions==4.1.1
     #   mangum
     #   mypy-boto3-cognito-idp
     #   pydantic
+    #   reactivex
 tzdata==2022.1
     # via django
 urllib3==1.26.9

@@ -9,6 +9,10 @@ pydantic[dotenv]
 pydantic[email]
 mangum
 
+# async
+reactivex
+rx
+
 # Logs
 sentry-sdk
 
