@@ -12,6 +12,7 @@ mangum
 # async
 reactivex
 rx
+tornado
 
 # Logs
 sentry-sdk
